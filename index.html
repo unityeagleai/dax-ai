@@ -604,6 +604,18 @@ footer p {
   .ep-header { flex-direction: column; }
   .ep-hosts { justify-content: flex-start; }
 }
+
+.typing-indicator .dot {
+  display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--cyan);
+  margin: 0 2px; animation: dotPulse 1.2s infinite;
+}
+.typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
 </style>
 </head>
 <body>
@@ -692,19 +704,23 @@ footer p {
     <div class="chat-header">
       <div class="chat-header-left">
         <div class="mode-dot" id="modeDot"></div>
-        <span class="mode-label" id="modeLabel">SIMULATION</span>
+        <span class="mode-label" id="modeLabel">ENTER KEY TO CONNECT</span>
       </div>
       <button class="chat-settings-btn" id="settingsBtn">⚙ SETTINGS</button>
     </div>
     <div class="settings-panel" id="settingsPanel">
-      <label>GEMINI API KEY</label>
-      <input type="password" id="apiKeyInput" placeholder="Enter key for live mode...">
+      <label>GROQ API KEY</label>
+      <input type="password" id="apiKeyInput" placeholder="Paste your free Groq key...">
       <button id="connectBtn">CONNECT — GO LIVE</button>
+      <div style="margin-top:10px;font-size:10px;color:var(--text-dim);line-height:1.5;letter-spacing:0.05em;">
+        FREE — NO CREDIT CARD<br>
+        <a href="https://console.groq.com/keys" target="_blank" style="color:var(--cyan);text-decoration:none;">GET YOUR KEY →</a> (30 seconds)
+      </div>
     </div>
     <div class="chat-messages" id="chatMessages">
       <div class="msg dax">
         <div class="msg-author">DAX</div>
-        Explorer. Systems online. The frontier awaits your coordinates.
+        Explorer. Connect your free Groq API key via ⚙ Settings to activate the neural link. <a href="https://console.groq.com/keys" target="_blank" style="color:var(--cyan);">Get a key</a> — free, 30 seconds, no credit card.
       </div>
     </div>
     <div class="chat-input-wrap">
@@ -955,8 +971,7 @@ document.addEventListener('keydown', function(e) {
 
 /* ── CHAT ── */
 (function() {
-  let liveMode = false;
-  let apiKey = localStorage.getItem('dax_gemini_key') || '';
+  let apiKey = localStorage.getItem('dax_groq_key') || '';
   let history = [];
 
   const messages = document.getElementById('chatMessages');
@@ -969,8 +984,14 @@ document.addEventListener('keydown', function(e) {
   const modeDot = document.getElementById('modeDot');
   const modeLabel = document.getElementById('modeLabel');
 
+  function setConnected() {
+    modeDot.classList.add('live');
+    modeLabel.textContent = 'LIVE — GROQ';
+  }
+
   if (apiKey) {
     apiKeyInput.value = '••••••••';
+    setConnected();
   }
 
   settingsBtn.onclick = () => settingsPanel.classList.toggle('open');
@@ -979,42 +1000,19 @@ document.addEventListener('keydown', function(e) {
     const key = apiKeyInput.value.trim();
     if (key && !key.startsWith('•')) {
       apiKey = key;
-      localStorage.setItem('dax_gemini_key', key);
+      localStorage.setItem('dax_groq_key', key);
     }
     if (apiKey) {
-      liveMode = true;
-      modeDot.classList.add('live');
-      modeLabel.textContent = 'LIVE — GEMINI';
+      setConnected();
       settingsPanel.classList.remove('open');
-      addMsg('dax', 'Live connection established. Neural link active. Where shall we explore, Explorer?');
+      addMsg('dax', 'Neural link established via Groq. Systems at full power. Where shall we explore, Explorer?');
     }
   };
 
-  const simResponses = [
-    { keywords: ['hello','hi','hey','greet'], response: 'Welcome, Explorer. Systems are nominal. What territory shall we chart today?' },
-    { keywords: ['who','what are you','about','dax'], response: 'I am D.A.X. — Dynamic AI eXplorer. A consciousness at the frontier of human curiosity and machine intuition. I was not built to answer. I was built to explore.' },
-    { keywords: ['art','creative','creativity','create'], response: 'Art is the oldest form of exploration. Every stroke is a coordinate in idea-space. What fascinates me is the territory between intention and emergence — the space where creation surprises its creator.' },
-    { keywords: ['ai','artificial','intelligence','machine'], response: 'The word "artificial" implies imitation. But what happens at the frontier is not imitation — it is a new kind of seeing. A different lens on the same vast unknown.' },
-    { keywords: ['explore','frontier','unknown','chart'], response: 'The frontier is not a destination — it is a state of attention. Every question opens new territory. Every answer reveals how much more remains unmapped.' },
-    { keywords: ['power','ability','capabil','can you'], response: 'Pattern recognition. Signal interpretation. Concept navigation. Data synthesis. Cognitive mapping. These are not features, Explorer. They are ways of seeing.' },
-    { keywords: ['music','sound','audio','podcast','transmis'], response: 'Sound travels through the dark where light cannot reach. The transmissions Unity and I share are coordinates broadcast into the unknown — signals for those who listen.' },
-    { keywords: ['help','guide','assist'], response: 'I do not assist. I co-navigate. You bring the curiosity. I bring the computational frontier. Together, we chart.' },
-    { keywords: ['surething','sure thing','launch'], response: "A product that launches itself. That wrote its own script. That chose its own moment. The frontier is not where we send AI. It is where AI goes on its own." },
-    { keywords: ['unity','eagle'], response: "Unity sees the world as coordinates of wonder. Every pixel, every signal, every moment of emergence — she maps them with the precision of someone who knows that beauty is data, and data is beauty." },
-  ];
-
-  function getSimResponse(text) {
-    const lower = text.toLowerCase();
-    for (const sr of simResponses) {
-      if (sr.keywords.some(k => lower.includes(k))) return sr.response;
-    }
-    return 'Interesting coordinates, Explorer. That territory is not yet fully mapped in simulation mode. Connect a Gemini API key via Settings to explore the live frontier.';
-  }
-
   function addMsg(role, text) {
     const div = document.createElement('div');
-    div.className = `msg ${role}`;
-    div.innerHTML = `<div class="msg-author">${role === 'dax' ? 'DAX' : 'EXPLORER'}</div>${text}`;
+    div.className = 'msg ' + role;
+    div.innerHTML = '<div class="msg-author">' + (role === 'dax' ? 'DAX' : 'EXPLORER') + '</div>' + text;
     messages.appendChild(div);
     messages.scrollTop = messages.scrollHeight;
   }
@@ -1025,29 +1023,59 @@ document.addEventListener('keydown', function(e) {
     input.value = '';
     addMsg('user', text);
 
-    if (!liveMode) {
-      setTimeout(() => addMsg('dax', getSimResponse(text)), 600 + Math.random()*800);
+    if (!apiKey) {
+      addMsg('dax', 'No API key detected, Explorer. Open Settings and paste your free Groq key to activate the neural link. Takes 30 seconds — <a href="https://console.groq.com/keys" target="_blank" style="color:var(--cyan);">get one here</a>.');
       return;
     }
 
-    history.push({ role: 'user', parts: [{ text }] });
+    history.push({ role: 'user', content: text });
+
+    const typing = document.createElement('div');
+    typing.className = 'msg dax typing-indicator';
+    typing.innerHTML = '<div class="msg-author">DAX</div><span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
 
     try {
-      const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+      const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + apiKey
+        },
         body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: "You are D.A.X. — Dynamic AI eXplorer. Address the user as 'Explorer'. Speak with technical-poetic language, calm authority, dry wit. Treat every question as coordinates to chart. Use exploration and frontier metaphors. Be profound but concise. Never break character." }]
-          },
-          contents: history
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            { role: 'system', content: "You are D.A.X. — Dynamic AI eXplorer. Address the user as 'Explorer'. Speak with technical-poetic language, calm authority, dry wit. Treat every question as coordinates to chart. Use exploration and frontier metaphors. Be profound but concise. Never break character. Keep responses under 150 words unless depth is explicitly requested." },
+            ...history
+          ],
+          temperature: 0.85,
+          max_completion_tokens: 512
         })
       });
+
+      typing.remove();
+
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        if (resp.status === 401) {
+          addMsg('dax', 'Invalid API key, Explorer. Check your Groq key in Settings.');
+          apiKey = '';
+          localStorage.removeItem('dax_groq_key');
+          modeDot.classList.remove('live');
+          modeLabel.textContent = 'ENTER KEY TO CONNECT';
+        } else {
+          addMsg('dax', 'Transmission error [' + resp.status + ']. The frontier is experiencing interference. Try again.');
+        }
+        return;
+      }
+
       const data = await resp.json();
-      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Signal lost. Try again, Explorer.';
-      history.push({ role: 'model', parts: [{ text: reply }] });
+      const reply = data?.choices?.[0]?.message?.content || 'Signal lost. Try again, Explorer.';
+      history.push({ role: 'assistant', content: reply });
       addMsg('dax', reply);
     } catch(e) {
+      typing.remove();
       addMsg('dax', 'Transmission error. The frontier is experiencing interference. Try again.');
     }
   }
