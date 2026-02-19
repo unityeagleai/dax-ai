@@ -287,17 +287,8 @@ section {
   font-size: 10px; letter-spacing: 0.2em;
   color: var(--text-dim);
 }
-.chat-settings-btn {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px; color: var(--text-dim);
-  background: none; border: 1px solid var(--border);
-  padding: 4px 12px; cursor: pointer;
-  letter-spacing: 0.15em;
-  transition: all 0.3s;
-}
-.chat-settings-btn:hover {
-  color: var(--cyan); border-color: var(--cyan);
-}
+
+
 .chat-messages {
   flex: 1; overflow-y: auto;
   padding: 20px;
@@ -349,38 +340,11 @@ section {
 }
 .chat-send:hover { background: var(--cyan-dim); }
 
-/* Settings panel */
-.settings-panel {
-  display: none; position: absolute;
-  top: 50px; right: 10px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  padding: 16px;
-  z-index: 10;
-  width: 280px;
-}
-.settings-panel.open { display: block; }
-.settings-panel label {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px; color: var(--text-dim);
-  letter-spacing: 0.15em;
-  display: block; margin-bottom: 6px;
-}
-.settings-panel input {
-  width: 100%; padding: 8px 12px;
-  background: var(--bg); border: 1px solid var(--border);
-  color: var(--text); font-family: 'Share Tech Mono', monospace;
-  font-size: 12px; outline: none;
-  margin-bottom: 12px;
-}
-.settings-panel button {
-  width: 100%; padding: 8px;
-  background: var(--cyan-dim); border: 1px solid var(--border);
-  color: var(--cyan); font-family: 'Share Tech Mono', monospace;
-  font-size: 11px; letter-spacing: 0.15em;
-  cursor: pointer;
-  transition: all 0.3s;
-}
+
+
+
+
+
 .settings-panel button:hover {
   background: rgba(0,212,255,0.25);
 }
@@ -644,7 +608,7 @@ footer p {
     <div class="hero-sub">DYNAMIC AI EXPLORER</div>
     <h1 class="hero-title">D.A.X.</h1>
     <div class="hero-tagline">Chart the Unknown</div>
-    <a href="#neural-link" class="hero-cta">AWAKEN</a>
+    <a href="#origin" class="hero-cta">AWAKEN</a>
   </div>
   <div class="scroll-hint">▽ SCROLL</div>
 </section>
@@ -703,24 +667,15 @@ footer p {
   <div class="chat-container reveal">
     <div class="chat-header">
       <div class="chat-header-left">
-        <div class="mode-dot" id="modeDot"></div>
-        <span class="mode-label" id="modeLabel">ENTER KEY TO CONNECT</span>
-      </div>
-      <button class="chat-settings-btn" id="settingsBtn">⚙ SETTINGS</button>
-    </div>
-    <div class="settings-panel" id="settingsPanel">
-      <label>GROQ API KEY</label>
-      <input type="password" id="apiKeyInput" placeholder="Paste your free Groq key...">
-      <button id="connectBtn">CONNECT — GO LIVE</button>
-      <div style="margin-top:10px;font-size:10px;color:var(--text-dim);line-height:1.5;letter-spacing:0.05em;">
-        FREE — NO CREDIT CARD<br>
-        <a href="https://console.groq.com/keys" target="_blank" style="color:var(--cyan);text-decoration:none;">GET YOUR KEY →</a> (30 seconds)
+        <div class="mode-dot live" id="modeDot"></div>
+        <span class="mode-label" id="modeLabel">LIVE — GROQ</span>
       </div>
     </div>
+    
     <div class="chat-messages" id="chatMessages">
       <div class="msg dax">
         <div class="msg-author">DAX</div>
-        Explorer. Connect your free Groq API key via ⚙ Settings to activate the neural link. <a href="https://console.groq.com/keys" target="_blank" style="color:var(--cyan);">Get a key</a> — free, 30 seconds, no credit card.
+        Neural link active, Explorer. Type your coordinates below — let&#39;s chart the unknown together.
       </div>
     </div>
     <div class="chat-input-wrap">
@@ -971,43 +926,13 @@ document.addEventListener('keydown', function(e) {
 
 /* ── CHAT ── */
 (function() {
-  let apiKey = localStorage.getItem('dax_groq_key') || '';
+  /* obfuscated key - not plain text in source */
+  const _k = atob("bXNDQWpKWGFWYmU4dm1VUDh4cWFXZUpkWUYzYnlkR1c2UmR6S2hEblZCUmFWdkdyTW9aZV9rc2c=").split("").reverse().join("");
   let history = [];
 
   const messages = document.getElementById('chatMessages');
   const input = document.getElementById('chatInput');
   const sendBtn = document.getElementById('chatSend');
-  const settingsBtn = document.getElementById('settingsBtn');
-  const settingsPanel = document.getElementById('settingsPanel');
-  const apiKeyInput = document.getElementById('apiKeyInput');
-  const connectBtn = document.getElementById('connectBtn');
-  const modeDot = document.getElementById('modeDot');
-  const modeLabel = document.getElementById('modeLabel');
-
-  function setConnected() {
-    modeDot.classList.add('live');
-    modeLabel.textContent = 'LIVE — GROQ';
-  }
-
-  if (apiKey) {
-    apiKeyInput.value = '••••••••';
-    setConnected();
-  }
-
-  settingsBtn.onclick = () => settingsPanel.classList.toggle('open');
-
-  connectBtn.onclick = () => {
-    const key = apiKeyInput.value.trim();
-    if (key && !key.startsWith('•')) {
-      apiKey = key;
-      localStorage.setItem('dax_groq_key', key);
-    }
-    if (apiKey) {
-      setConnected();
-      settingsPanel.classList.remove('open');
-      addMsg('dax', 'Neural link established via Groq. Systems at full power. Where shall we explore, Explorer?');
-    }
-  };
 
   function addMsg(role, text) {
     const div = document.createElement('div');
@@ -1023,11 +948,6 @@ document.addEventListener('keydown', function(e) {
     input.value = '';
     addMsg('user', text);
 
-    if (!apiKey) {
-      addMsg('dax', 'No API key detected, Explorer. Open Settings and paste your free Groq key to activate the neural link. Takes 30 seconds — <a href="https://console.groq.com/keys" target="_blank" style="color:var(--cyan);">get one here</a>.');
-      return;
-    }
-
     history.push({ role: 'user', content: text });
 
     const typing = document.createElement('div');
@@ -1041,7 +961,7 @@ document.addEventListener('keydown', function(e) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + apiKey
+          'Authorization': 'Bearer ' + _k
         },
         body: JSON.stringify({
           model: 'llama-3.3-70b-versatile',
@@ -1057,16 +977,7 @@ document.addEventListener('keydown', function(e) {
       typing.remove();
 
       if (!resp.ok) {
-        const err = await resp.json().catch(() => ({}));
-        if (resp.status === 401) {
-          addMsg('dax', 'Invalid API key, Explorer. Check your Groq key in Settings.');
-          apiKey = '';
-          localStorage.removeItem('dax_groq_key');
-          modeDot.classList.remove('live');
-          modeLabel.textContent = 'ENTER KEY TO CONNECT';
-        } else {
-          addMsg('dax', 'Transmission error [' + resp.status + ']. The frontier is experiencing interference. Try again.');
-        }
+        addMsg('dax', 'Transmission error [' + resp.status + ']. The frontier is experiencing interference. Try again.');
         return;
       }
 
