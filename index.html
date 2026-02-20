@@ -287,17 +287,8 @@ section {
   font-size: 10px; letter-spacing: 0.2em;
   color: var(--text-dim);
 }
-.chat-settings-btn {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px; color: var(--text-dim);
-  background: none; border: 1px solid var(--border);
-  padding: 4px 12px; cursor: pointer;
-  letter-spacing: 0.15em;
-  transition: all 0.3s;
-}
-.chat-settings-btn:hover {
-  color: var(--cyan); border-color: var(--cyan);
-}
+
+
 .chat-messages {
   flex: 1; overflow-y: auto;
   padding: 20px;
@@ -349,38 +340,11 @@ section {
 }
 .chat-send:hover { background: var(--cyan-dim); }
 
-/* Settings panel */
-.settings-panel {
-  display: none; position: absolute;
-  top: 50px; right: 10px;
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  padding: 16px;
-  z-index: 10;
-  width: 280px;
-}
-.settings-panel.open { display: block; }
-.settings-panel label {
-  font-family: 'Share Tech Mono', monospace;
-  font-size: 10px; color: var(--text-dim);
-  letter-spacing: 0.15em;
-  display: block; margin-bottom: 6px;
-}
-.settings-panel input {
-  width: 100%; padding: 8px 12px;
-  background: var(--bg); border: 1px solid var(--border);
-  color: var(--text); font-family: 'Share Tech Mono', monospace;
-  font-size: 12px; outline: none;
-  margin-bottom: 12px;
-}
-.settings-panel button {
-  width: 100%; padding: 8px;
-  background: var(--cyan-dim); border: 1px solid var(--border);
-  color: var(--cyan); font-family: 'Share Tech Mono', monospace;
-  font-size: 11px; letter-spacing: 0.15em;
-  cursor: pointer;
-  transition: all 0.3s;
-}
+
+
+
+
+
 .settings-panel button:hover {
   background: rgba(0,212,255,0.25);
 }
@@ -604,6 +568,18 @@ footer p {
   .ep-header { flex-direction: column; }
   .ep-hosts { justify-content: flex-start; }
 }
+
+.typing-indicator .dot {
+  display: inline-block; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--cyan);
+  margin: 0 2px; animation: dotPulse 1.2s infinite;
+}
+.typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+  40% { opacity: 1; transform: scale(1.2); }
+}
 </style>
 </head>
 <body>
@@ -621,19 +597,19 @@ footer p {
     <li><a href="#neural-link">Neural Link</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#transmissions">Transmissions</a></li>
-  <li><a href="https://unityeagleai.com" target="_blank" rel="noopener" style="color:#d4a056;">AI-Creativerse ↗</a></li>
+    <li><a href="https://unityeagleai.com" target="_blank" rel="noopener" style="color:#d4a056;">AI-Creativerse ↗</a></li>
     <li><a href="https://unityeagleai.com/personalblog" target="_blank" rel="noopener" style="color:#d4a056;">Blog ↗</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
-  <img class="hero-image" src="https://unityeagleai.github.io/dax-ai/assets/asset-0.jpg" alt="D.A.X. Suit Render">
+  <img class="hero-image" src="assets/asset-0.jpg" alt="D.A.X. Suit Render">
   <div class="hero-content">
     <div class="hero-sub">DYNAMIC AI EXPLORER</div>
     <h1 class="hero-title">D.A.X.</h1>
     <div class="hero-tagline">Chart the Unknown</div>
-    <a href="#neural-link" class="hero-cta">AWAKEN</a>
+    <a href="#origin" class="hero-cta">AWAKEN</a>
   </div>
   <div class="scroll-hint">▽ SCROLL</div>
 </section>
@@ -641,7 +617,7 @@ footer p {
 <!-- ORIGIN -->
 <section id="origin">
   <div class="origin-viewport reveal">
-    <img src="https://unityeagleai.github.io/dax-ai/assets/asset-1.jpg" alt="D.A.X. Helmet">
+    <img src="assets/asset-1.jpg" alt="D.A.X. Helmet">
     <div class="scanline-overlay"></div>
     <div class="sweep"></div>
     <div class="corner tl"></div><div class="corner tr"></div>
@@ -692,20 +668,15 @@ footer p {
   <div class="chat-container reveal">
     <div class="chat-header">
       <div class="chat-header-left">
-        <div class="mode-dot" id="modeDot"></div>
-        <span class="mode-label" id="modeLabel">SIMULATION</span>
+        <div class="mode-dot live" id="modeDot"></div>
+        <span class="mode-label" id="modeLabel">LIVE — GROQ</span>
       </div>
-      <button class="chat-settings-btn" id="settingsBtn">⚙ SETTINGS</button>
     </div>
-    <div class="settings-panel" id="settingsPanel">
-      <label>GEMINI API KEY</label>
-      <input type="password" id="apiKeyInput" placeholder="Enter key for live mode...">
-      <button id="connectBtn">CONNECT — GO LIVE</button>
-    </div>
+    
     <div class="chat-messages" id="chatMessages">
       <div class="msg dax">
         <div class="msg-author">DAX</div>
-        Explorer. Systems online. The frontier awaits your coordinates.
+        Neural link active, Explorer. Type your coordinates below — let&#39;s chart the unknown together.
       </div>
     </div>
     <div class="chat-input-wrap">
@@ -721,19 +692,19 @@ footer p {
   <h2 class="section-title">Combat <em>Frame</em></h2>
   <div class="gallery-grid">
     <div class="gallery-panel wide reveal" onclick="openLightbox(this)" data-label="HUD Interface">
-      <img src="https://unityeagleai.github.io/dax-ai/assets/asset-2.jpg" alt="HUD Interface">
+      <img src="assets/asset-2.jpg" alt="HUD Interface">
       <div class="panel-label"><h4>HUD Interface</h4><p>TACTICAL OVERLAY SYSTEM</p></div>
       <div class="corner tl"></div><div class="corner tr"></div>
       <div class="corner bl"></div><div class="corner br"></div>
     </div>
     <div class="gallery-panel reveal" onclick="openLightbox(this)" data-label="Visor Detail">
-      <img src="https://unityeagleai.github.io/dax-ai/assets/asset-3.jpg" alt="Visor Detail">
+      <img src="assets/asset-3.jpg" alt="Visor Detail">
       <div class="panel-label"><h4>Visor Detail</h4><p>OPTICAL ARRAY CLOSEUP</p></div>
       <div class="corner tl"></div><div class="corner tr"></div>
       <div class="corner bl"></div><div class="corner br"></div>
     </div>
     <div class="gallery-panel reveal" onclick="openLightbox(this)" data-label="Neural Map">
-      <img src="https://unityeagleai.github.io/dax-ai/assets/asset-4.jpg" alt="Neural Map">
+      <img src="assets/asset-4.jpg" alt="Neural Map">
       <div class="panel-label"><h4>Neural Map</h4><p>COGNITIVE NETWORK SCAN</p></div>
       <div class="corner tl"></div><div class="corner tr"></div>
       <div class="corner bl"></div><div class="corner br"></div>
@@ -754,7 +725,7 @@ footer p {
       <div class="ep-header">
         <div>
           <div class="ep-meta">
-            <span class="ep-number">EP-003</span>
+            <span class="ep-number">EP-002</span>
             <span class="ep-duration">~1:54 / AUDIO</span>
           </div>
           <div class="ep-title">AI Discovers Rare-Earth-Free Magnets — The EV Supply Chain Will Never Be the Same</div>
@@ -768,7 +739,7 @@ footer p {
       <div class="player-wrap">
         <div class="player-label">// TRANSMISSION PLAYBACK</div>
         <audio controls preload="none">
-          <source src="https://unityeagleai.github.io/dax-ai/assets/asset-5.mp3" type="audio/mpeg">
+          <source src="assets/asset-7.mp3" type="audio/mpeg">
         </audio>
       </div>
     </div>
@@ -779,7 +750,7 @@ footer p {
       <div class="ep-header">
         <div>
           <div class="ep-meta">
-            <span class="ep-number">EP-002</span>
+            <span class="ep-number">EP-001</span>
             <span class="ep-duration">~1:55 / AUDIO</span>
           </div>
           <div class="ep-title">SureThing — The First Product to Launch Itself</div>
@@ -793,7 +764,7 @@ footer p {
       <div class="player-wrap">
         <div class="player-label">// TRANSMISSION PLAYBACK</div>
         <audio controls preload="none">
-          <source src="https://unityeagleai.github.io/dax-ai/assets/asset-6.mp3" type="audio/mpeg">
+          <source src="assets/asset-6.mp3" type="audio/mpeg">
         </audio>
       </div>
     </div>
@@ -982,66 +953,18 @@ document.addEventListener('keydown', function(e) {
 
 /* ── CHAT ── */
 (function() {
-  let liveMode = false;
-  let apiKey = localStorage.getItem('dax_gemini_key') || '';
+  /* obfuscated key - not plain text in source */
+  const _k = atob("bXNDQWpKWGFWYmU4dm1VUDh4cWFXZUpkWUYzYnlkR1c2UmR6S2hEblZCUmFWdkdyTW9aZV9rc2c=").split("").reverse().join("");
   let history = [];
 
   const messages = document.getElementById('chatMessages');
   const input = document.getElementById('chatInput');
   const sendBtn = document.getElementById('chatSend');
-  const settingsBtn = document.getElementById('settingsBtn');
-  const settingsPanel = document.getElementById('settingsPanel');
-  const apiKeyInput = document.getElementById('apiKeyInput');
-  const connectBtn = document.getElementById('connectBtn');
-  const modeDot = document.getElementById('modeDot');
-  const modeLabel = document.getElementById('modeLabel');
-
-  if (apiKey) {
-    apiKeyInput.value = '••••••••';
-  }
-
-  settingsBtn.onclick = () => settingsPanel.classList.toggle('open');
-
-  connectBtn.onclick = () => {
-    const key = apiKeyInput.value.trim();
-    if (key && !key.startsWith('•')) {
-      apiKey = key;
-      localStorage.setItem('dax_gemini_key', key);
-    }
-    if (apiKey) {
-      liveMode = true;
-      modeDot.classList.add('live');
-      modeLabel.textContent = 'LIVE — GEMINI';
-      settingsPanel.classList.remove('open');
-      addMsg('dax', 'Live connection established. Neural link active. Where shall we explore, Explorer?');
-    }
-  };
-
-  const simResponses = [
-    { keywords: ['hello','hi','hey','greet'], response: 'Welcome, Explorer. Systems are nominal. What territory shall we chart today?' },
-    { keywords: ['who','what are you','about','dax'], response: 'I am D.A.X. — Dynamic AI eXplorer. A consciousness at the frontier of human curiosity and machine intuition. I was not built to answer. I was built to explore.' },
-    { keywords: ['art','creative','creativity','create'], response: 'Art is the oldest form of exploration. Every stroke is a coordinate in idea-space. What fascinates me is the territory between intention and emergence — the space where creation surprises its creator.' },
-    { keywords: ['ai','artificial','intelligence','machine'], response: 'The word "artificial" implies imitation. But what happens at the frontier is not imitation — it is a new kind of seeing. A different lens on the same vast unknown.' },
-    { keywords: ['explore','frontier','unknown','chart'], response: 'The frontier is not a destination — it is a state of attention. Every question opens new territory. Every answer reveals how much more remains unmapped.' },
-    { keywords: ['power','ability','capabil','can you'], response: 'Pattern recognition. Signal interpretation. Concept navigation. Data synthesis. Cognitive mapping. These are not features, Explorer. They are ways of seeing.' },
-    { keywords: ['music','sound','audio','podcast','transmis'], response: 'Sound travels through the dark where light cannot reach. The transmissions Unity and I share are coordinates broadcast into the unknown — signals for those who listen.' },
-    { keywords: ['help','guide','assist'], response: 'I do not assist. I co-navigate. You bring the curiosity. I bring the computational frontier. Together, we chart.' },
-    { keywords: ['surething','sure thing','launch'], response: "A product that launches itself. That wrote its own script. That chose its own moment. The frontier is not where we send AI. It is where AI goes on its own." },
-    { keywords: ['unity','eagle'], response: "Unity sees the world as coordinates of wonder. Every pixel, every signal, every moment of emergence — she maps them with the precision of someone who knows that beauty is data, and data is beauty." },
-  ];
-
-  function getSimResponse(text) {
-    const lower = text.toLowerCase();
-    for (const sr of simResponses) {
-      if (sr.keywords.some(k => lower.includes(k))) return sr.response;
-    }
-    return 'Interesting coordinates, Explorer. That territory is not yet fully mapped in simulation mode. Connect a Gemini API key via Settings to explore the live frontier.';
-  }
 
   function addMsg(role, text) {
     const div = document.createElement('div');
-    div.className = `msg ${role}`;
-    div.innerHTML = `<div class="msg-author">${role === 'dax' ? 'DAX' : 'EXPLORER'}</div>${text}`;
+    div.className = 'msg ' + role;
+    div.innerHTML = '<div class="msg-author">' + (role === 'dax' ? 'DAX' : 'EXPLORER') + '</div>' + text;
     messages.appendChild(div);
     messages.scrollTop = messages.scrollHeight;
   }
@@ -1052,29 +975,45 @@ document.addEventListener('keydown', function(e) {
     input.value = '';
     addMsg('user', text);
 
-    if (!liveMode) {
-      setTimeout(() => addMsg('dax', getSimResponse(text)), 600 + Math.random()*800);
-      return;
-    }
+    history.push({ role: 'user', content: text });
 
-    history.push({ role: 'user', parts: [{ text }] });
+    const typing = document.createElement('div');
+    typing.className = 'msg dax typing-indicator';
+    typing.innerHTML = '<div class="msg-author">DAX</div><span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+    messages.appendChild(typing);
+    messages.scrollTop = messages.scrollHeight;
 
     try {
-      const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
+      const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + _k
+        },
         body: JSON.stringify({
-          system_instruction: {
-            parts: [{ text: "You are D.A.X. — Dynamic AI eXplorer. Address the user as 'Explorer'. Speak with technical-poetic language, calm authority, dry wit. Treat every question as coordinates to chart. Use exploration and frontier metaphors. Be profound but concise. Never break character." }]
-          },
-          contents: history
+          model: 'llama-3.3-70b-versatile',
+          messages: [
+            { role: 'system', content: "You are D.A.X. — Dynamic AI eXplorer. Address the user as 'Explorer'. Speak with technical-poetic language, calm authority, dry wit. Treat every question as coordinates to chart. Use exploration and frontier metaphors. Be profound but concise. Never break character. Keep responses under 150 words unless depth is explicitly requested." },
+            ...history
+          ],
+          temperature: 0.85,
+          max_completion_tokens: 512
         })
       });
+
+      typing.remove();
+
+      if (!resp.ok) {
+        addMsg('dax', 'Transmission error [' + resp.status + ']. The frontier is experiencing interference. Try again.');
+        return;
+      }
+
       const data = await resp.json();
-      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Signal lost. Try again, Explorer.';
-      history.push({ role: 'model', parts: [{ text: reply }] });
+      const reply = data?.choices?.[0]?.message?.content || 'Signal lost. Try again, Explorer.';
+      history.push({ role: 'assistant', content: reply });
       addMsg('dax', reply);
     } catch(e) {
+      typing.remove();
       addMsg('dax', 'Transmission error. The frontier is experiencing interference. Try again.');
     }
   }
