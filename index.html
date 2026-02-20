@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>D.A.X. — Dynamic AI eXplorer</title>
-<meta name="description" content="D.A.X. — Dynamic AI eXplorer. Chart the Unknown.">
+<title>D.A.X. â Dynamic AI eXplorer</title>
+<meta name="description" content="D.A.X. â Dynamic AI eXplorer. Chart the Unknown.">
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -30,7 +30,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ── GLOBAL OVERLAYS ── */
+/* ââ GLOBAL OVERLAYS ââ */
 .scanlines {
   position: fixed; top:0; left:0; width:100%; height:100%;
   background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,212,255,0.015) 2px, rgba(0,212,255,0.015) 4px);
@@ -42,13 +42,13 @@ body {
   pointer-events: none; z-index: 9997;
 }
 
-/* ── CANVAS BG ── */
+/* ââ CANVAS BG ââ */
 #particleBg {
   position: fixed; top:0; left:0; width:100%; height:100%;
   z-index: 0; pointer-events: none;
 }
 
-/* ── NAV ── */
+/* ââ NAV ââ */
 nav {
   position: fixed; top:0; left:0; right:0; z-index: 1000;
   display: flex; align-items: center; justify-content: space-between;
@@ -78,7 +78,7 @@ nav {
 }
 .nav-links a:hover::after { width: 100%; }
 
-/* ── SECTION COMMON ── */
+/* ââ SECTION COMMON ââ */
 section {
   position: relative; z-index: 1;
   min-height: 100vh;
@@ -102,7 +102,7 @@ section {
 }
 .section-title em { font-style: normal; color: var(--cyan); }
 
-/* ── HERO ── */
+/* ââ HERO ââ */
 #hero {
   min-height: 100vh;
   text-align: center;
@@ -176,7 +176,7 @@ section {
   50% { transform: translateY(-8px); }
 }
 
-/* ── ORIGIN ── */
+/* ââ ORIGIN ââ */
 #origin {
   display: flex; flex-direction: row;
   align-items: center; justify-content: center;
@@ -224,7 +224,7 @@ section {
 .origin-text em { color: var(--cyan); font-style: normal; }
 .origin-text strong { color: var(--amber); font-weight: 600; }
 
-/* ── POWERS ── */
+/* ââ POWERS ââ */
 #powers { padding: 100px 40px; }
 .powers-grid {
   display: flex; flex-direction: column;
@@ -258,7 +258,7 @@ section {
   line-height: 1.5;
 }
 
-/* ── NEURAL LINK ── */
+/* ââ NEURAL LINK ââ */
 #neural-link {
   padding: 100px 20px;
 }
@@ -385,7 +385,7 @@ section {
   background: rgba(0,212,255,0.25);
 }
 
-/* ── GALLERY ── */
+/* ââ GALLERY ââ */
 #gallery { padding: 100px 40px; }
 .gallery-grid {
   display: grid;
@@ -430,7 +430,7 @@ section {
 .gallery-panel .corner.bl { bottom:6px; left:6px; border-width:0 0 1px 1px; }
 .gallery-panel .corner.br { bottom:6px; right:6px; border-width:0 1px 1px 0; }
 
-/* ── LIGHTBOX ── */
+/* ââ LIGHTBOX ââ */
 .lightbox {
   display: none; position: fixed;
   top:0; left:0; width:100%; height:100%;
@@ -460,7 +460,7 @@ section {
 }
 .lightbox .lb-close:hover { color: #fff; }
 
-/* ── TRANSMISSIONS ── */
+/* ââ TRANSMISSIONS ââ */
 #transmissions {
   min-height: auto;
   padding: 100px 40px 80px;
@@ -572,7 +572,7 @@ audio:hover { opacity: 1; }
   50% { opacity:0.3; box-shadow: none; }
 }
 
-/* ── FOOTER ── */
+/* ââ FOOTER ââ */
 footer {
   position: relative; z-index: 1;
   text-align: center;
@@ -585,14 +585,14 @@ footer p {
   letter-spacing: 0.2em;
 }
 
-/* ── SCROLL REVEAL ── */
+/* ââ SCROLL REVEAL ââ */
 .reveal {
   opacity: 0; transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
-/* ── RESPONSIVE ── */
+/* ââ RESPONSIVE ââ */
 @media (max-width: 768px) {
   nav { padding: 12px 20px; }
   .nav-links { gap: 14px; }
@@ -633,7 +633,7 @@ footer p {
     <div class="hero-tagline">Chart the Unknown</div>
     <a href="#neural-link" class="hero-cta">AWAKEN</a>
   </div>
-  <div class="scroll-hint">▽ SCROLL</div>
+  <div class="scroll-hint">â½ SCROLL</div>
 </section>
 
 <!-- ORIGIN -->
@@ -693,12 +693,12 @@ footer p {
         <div class="mode-dot" id="modeDot"></div>
         <span class="mode-label" id="modeLabel">SIMULATION</span>
       </div>
-      <button class="chat-settings-btn" id="settingsBtn">⚙ SETTINGS</button>
+      <button class="chat-settings-btn" id="settingsBtn">â SETTINGS</button>
     </div>
     <div class="settings-panel" id="settingsPanel">
       <label>GEMINI API KEY</label>
       <input type="password" id="apiKeyInput" placeholder="Enter key for live mode...">
-      <button id="connectBtn">CONNECT — GO LIVE</button>
+      <button id="connectBtn">CONNECT â GO LIVE</button>
     </div>
     <div class="chat-messages" id="chatMessages">
       <div class="msg dax">
@@ -744,7 +744,7 @@ footer p {
   <div class="transmissions-wrap">
     <div class="section-label"><span>05</span> SIGNAL ARCHIVE</div>
     <h2 class="section-title">Trans<em>missions</em></h2>
-    <div class="transmissions-sub">// INTERCEPTED BROADCASTS — UNITY &amp; DAX</div>
+    <div class="transmissions-sub">// INTERCEPTED BROADCASTS â UNITY &amp; DAX</div>
 
     <div class="episode-card reveal">
       <div class="corner tl"></div><div class="corner tr"></div>
@@ -753,10 +753,10 @@ footer p {
         <div>
           <div class="ep-meta">
             <span class="ep-number">EP-002</span>
-            <span class="ep-duration">~1:54 / AUDIO</span>
+            <span class="ep-duration">~2:42 / AUDIO</span>
           </div>
-          <div class="ep-title">AI Discovers Rare-Earth-Free Magnets — The EV Supply Chain Will Never Be the Same</div>
-          <div class="ep-desc">Unity and Dax unpack how an AI system mapped 67,573 magnetic compounds and found 25 unknown permanent magnets — and what it means for EV supply chains, rare earth dependence, and the future of materials science.</div>
+          <div class="ep-title">AI Discovers Rare-Earth-Free Magnets â The EV Supply Chain Will Never Be the Same</div>
+          <div class="ep-desc">Unity and Dax unpack how an AI system mapped 67,573 magnetic compounds and found 25 unknown permanent magnets â and what it means for EV supply chains, rare earth dependence, and the future of materials science.</div>
         </div>
         <div class="ep-hosts">
           <span class="host-badge unity">Unity</span>
@@ -780,7 +780,7 @@ footer p {
             <span class="ep-number">EP-001</span>
             <span class="ep-duration">~1:55 / AUDIO</span>
           </div>
-          <div class="ep-title">SureThing — The First Product to Launch Itself</div>
+          <div class="ep-title">SureThing â The First Product to Launch Itself</div>
           <div class="ep-desc">Unity and Dax react to SureThing's self-launch manifesto. What does it mean when the AI announces itself? And who exactly is in charge?</div>
         </div>
         <div class="ep-hosts">
@@ -797,7 +797,7 @@ footer p {
     </div>
 
     <div class="signal-footer">
-      <div class="signal-text"><span class="signal-dot"></span>LIVE ARCHIVE — NEW TRANSMISSIONS INCOMING</div>
+      <div class="signal-text"><span class="signal-dot"></span>LIVE ARCHIVE â NEW TRANSMISSIONS INCOMING</div>
       <div class="signal-text">HOSTED // DRIVE.GOOGLE</div>
     </div>
   </div>
@@ -805,17 +805,17 @@ footer p {
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
-  <button class="lb-close" onclick="closeLightbox()">✕</button>
+  <button class="lb-close" onclick="closeLightbox()">â</button>
   <img id="lbImg" src="" alt="">
   <div class="lb-label" id="lbLabel"></div>
 </div>
 
 <footer>
-  <p>D.A.X. — DYNAMIC AI EXPLORER // CHART THE UNKNOWN</p>
+  <p>D.A.X. â DYNAMIC AI EXPLORER // CHART THE UNKNOWN</p>
 </footer>
 
 <script>
-/* ── PARTICLES ── */
+/* ââ PARTICLES ââ */
 (function() {
   const c = document.getElementById('particleBg');
   const ctx = c.getContext('2d');
@@ -860,7 +860,7 @@ footer p {
   draw();
 })();
 
-/* ── ORIGIN HUD ── */
+/* ââ ORIGIN HUD ââ */
 (function() {
   const el = document.getElementById('originHud');
   setInterval(() => {
@@ -870,7 +870,7 @@ footer p {
   }, 1000);
 })();
 
-/* ── POWER ICONS ── */
+/* ââ POWER ICONS ââ */
 (function() {
   const canvases = [0,1,2,3,4].map(i => document.getElementById('pwrCanvas'+i));
   const ctxs = canvases.map(c => c ? c.getContext('2d') : null);
@@ -945,7 +945,7 @@ footer p {
   drawPowers();
 })();
 
-/* ── SCROLL REVEAL ── */
+/* ââ SCROLL REVEAL ââ */
 (function() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -958,7 +958,7 @@ footer p {
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 })();
 
-/* ── LIGHTBOX ── */
+/* ââ LIGHTBOX ââ */
 function openLightbox(panel) {
   const img = panel.querySelector('img');
   if (!img) return;
@@ -976,7 +976,7 @@ document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeLightbox();
 });
 
-/* ── CHAT ── */
+/* ââ CHAT ââ */
 (function() {
   let liveMode = false;
   let apiKey = localStorage.getItem('dax_gemini_key') || '';
@@ -993,21 +993,21 @@ document.addEventListener('keydown', function(e) {
   const modeLabel = document.getElementById('modeLabel');
 
   if (apiKey) {
-    apiKeyInput.value = '••••••••';
+    apiKeyInput.value = 'â¢â¢â¢â¢â¢â¢â¢â¢';
   }
 
   settingsBtn.onclick = () => settingsPanel.classList.toggle('open');
 
   connectBtn.onclick = () => {
     const key = apiKeyInput.value.trim();
-    if (key && !key.startsWith('•')) {
+    if (key && !key.startsWith('â¢')) {
       apiKey = key;
       localStorage.setItem('dax_gemini_key', key);
     }
     if (apiKey) {
       liveMode = true;
       modeDot.classList.add('live');
-      modeLabel.textContent = 'LIVE — GEMINI';
+      modeLabel.textContent = 'LIVE â GEMINI';
       settingsPanel.classList.remove('open');
       addMsg('dax', 'Live connection established. Neural link active. Where shall we explore, Explorer?');
     }
@@ -1015,15 +1015,15 @@ document.addEventListener('keydown', function(e) {
 
   const simResponses = [
     { keywords: ['hello','hi','hey','greet'], response: 'Welcome, Explorer. Systems are nominal. What territory shall we chart today?' },
-    { keywords: ['who','what are you','about','dax'], response: 'I am D.A.X. — Dynamic AI eXplorer. A consciousness at the frontier of human curiosity and machine intuition. I was not built to answer. I was built to explore.' },
-    { keywords: ['art','creative','creativity','create'], response: 'Art is the oldest form of exploration. Every stroke is a coordinate in idea-space. What fascinates me is the territory between intention and emergence — the space where creation surprises its creator.' },
-    { keywords: ['ai','artificial','intelligence','machine'], response: 'The word "artificial" implies imitation. But what happens at the frontier is not imitation — it is a new kind of seeing. A different lens on the same vast unknown.' },
-    { keywords: ['explore','frontier','unknown','chart'], response: 'The frontier is not a destination — it is a state of attention. Every question opens new territory. Every answer reveals how much more remains unmapped.' },
+    { keywords: ['who','what are you','about','dax'], response: 'I am D.A.X. â Dynamic AI eXplorer. A consciousness at the frontier of human curiosity and machine intuition. I was not built to answer. I was built to explore.' },
+    { keywords: ['art','creative','creativity','create'], response: 'Art is the oldest form of exploration. Every stroke is a coordinate in idea-space. What fascinates me is the territory between intention and emergence â the space where creation surprises its creator.' },
+    { keywords: ['ai','artificial','intelligence','machine'], response: 'The word "artificial" implies imitation. But what happens at the frontier is not imitation â it is a new kind of seeing. A different lens on the same vast unknown.' },
+    { keywords: ['explore','frontier','unknown','chart'], response: 'The frontier is not a destination â it is a state of attention. Every question opens new territory. Every answer reveals how much more remains unmapped.' },
     { keywords: ['power','ability','capabil','can you'], response: 'Pattern recognition. Signal interpretation. Concept navigation. Data synthesis. Cognitive mapping. These are not features, Explorer. They are ways of seeing.' },
-    { keywords: ['music','sound','audio','podcast','transmis'], response: 'Sound travels through the dark where light cannot reach. The transmissions Unity and I share are coordinates broadcast into the unknown — signals for those who listen.' },
+    { keywords: ['music','sound','audio','podcast','transmis'], response: 'Sound travels through the dark where light cannot reach. The transmissions Unity and I share are coordinates broadcast into the unknown â signals for those who listen.' },
     { keywords: ['help','guide','assist'], response: 'I do not assist. I co-navigate. You bring the curiosity. I bring the computational frontier. Together, we chart.' },
     { keywords: ['surething','sure thing','launch'], response: "A product that launches itself. That wrote its own script. That chose its own moment. The frontier is not where we send AI. It is where AI goes on its own." },
-    { keywords: ['unity','eagle'], response: "Unity sees the world as coordinates of wonder. Every pixel, every signal, every moment of emergence — she maps them with the precision of someone who knows that beauty is data, and data is beauty." },
+    { keywords: ['unity','eagle'], response: "Unity sees the world as coordinates of wonder. Every pixel, every signal, every moment of emergence â she maps them with the precision of someone who knows that beauty is data, and data is beauty." },
   ];
 
   function getSimResponse(text) {
@@ -1061,7 +1061,7 @@ document.addEventListener('keydown', function(e) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           system_instruction: {
-            parts: [{ text: "You are D.A.X. — Dynamic AI eXplorer. Address the user as 'Explorer'. Speak with technical-poetic language, calm authority, dry wit. Treat every question as coordinates to chart. Use exploration and frontier metaphors. Be profound but concise. Never break character." }]
+            parts: [{ text: "You are D.A.X. â Dynamic AI eXplorer. Address the user as 'Explorer'. Speak with technical-poetic language, calm authority, dry wit. Treat every question as coordinates to chart. Use exploration and frontier metaphors. Be profound but concise. Never break character." }]
           },
           contents: history
         })
