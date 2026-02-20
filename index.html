@@ -621,19 +621,17 @@ footer p {
     <li><a href="#neural-link">Neural Link</a></li>
     <li><a href="#gallery">Gallery</a></li>
     <li><a href="#transmissions">Transmissions</a></li>
-    <li><a href="https://unityeagleai.com" target="_blank" rel="noopener" style="color:#d4a056;">AI-Creativerse ↗</a></li>
-    <li><a href="https://unityeagleai.com/personalblog" target="_blank" rel="noopener" style="color:#d4a056;">Blog ↗</a></li>
   </ul>
 </nav>
 
 <!-- HERO -->
 <section id="hero">
-  <img class="hero-image" src="https://unityeagleai.github.io/dax-ai/assets/asset-0.jpg" alt="D.A.X. Suit Render">
+  <img class="hero-image" src="assets/asset-0.jpg" alt="D.A.X. Suit Render">
   <div class="hero-content">
     <div class="hero-sub">DYNAMIC AI EXPLORER</div>
     <h1 class="hero-title">D.A.X.</h1>
     <div class="hero-tagline">Chart the Unknown</div>
-    <a href="#origin" class="hero-cta">AWAKEN</a>
+    <a href="#neural-link" class="hero-cta">AWAKEN</a>
   </div>
   <div class="scroll-hint">▽ SCROLL</div>
 </section>
@@ -641,7 +639,7 @@ footer p {
 <!-- ORIGIN -->
 <section id="origin">
   <div class="origin-viewport reveal">
-    <img src="https://unityeagleai.github.io/dax-ai/assets/asset-1.jpg" alt="D.A.X. Helmet">
+    <img src="assets/asset-1.jpg" alt="D.A.X. Helmet">
     <div class="scanline-overlay"></div>
     <div class="sweep"></div>
     <div class="corner tl"></div><div class="corner tr"></div>
@@ -692,15 +690,20 @@ footer p {
   <div class="chat-container reveal">
     <div class="chat-header">
       <div class="chat-header-left">
-        <div class="mode-dot live" id="modeDot"></div>
-        <span class="mode-label" id="modeLabel">LIVE — GROQ</span>
+        <div class="mode-dot" id="modeDot"></div>
+        <span class="mode-label" id="modeLabel">SIMULATION</span>
       </div>
+      <button class="chat-settings-btn" id="settingsBtn">⚙ SETTINGS</button>
     </div>
-    
+    <div class="settings-panel" id="settingsPanel">
+      <label>GEMINI API KEY</label>
+      <input type="password" id="apiKeyInput" placeholder="Enter key for live mode...">
+      <button id="connectBtn">CONNECT — GO LIVE</button>
+    </div>
     <div class="chat-messages" id="chatMessages">
       <div class="msg dax">
         <div class="msg-author">DAX</div>
-        Neural link active, Explorer. Type your coordinates below — let&#39;s chart the unknown together.
+        Explorer. Systems online. The frontier awaits your coordinates.
       </div>
     </div>
     <div class="chat-input-wrap">
@@ -716,19 +719,19 @@ footer p {
   <h2 class="section-title">Combat <em>Frame</em></h2>
   <div class="gallery-grid">
     <div class="gallery-panel wide reveal" onclick="openLightbox(this)" data-label="HUD Interface">
-      <img src="https://unityeagleai.github.io/dax-ai/assets/asset-2.jpg" alt="HUD Interface">
+      <img src="assets/asset-2.jpg" alt="HUD Interface">
       <div class="panel-label"><h4>HUD Interface</h4><p>TACTICAL OVERLAY SYSTEM</p></div>
       <div class="corner tl"></div><div class="corner tr"></div>
       <div class="corner bl"></div><div class="corner br"></div>
     </div>
     <div class="gallery-panel reveal" onclick="openLightbox(this)" data-label="Visor Detail">
-      <img src="https://unityeagleai.github.io/dax-ai/assets/asset-3.jpg" alt="Visor Detail">
+      <img src="assets/asset-3.jpg" alt="Visor Detail">
       <div class="panel-label"><h4>Visor Detail</h4><p>OPTICAL ARRAY CLOSEUP</p></div>
       <div class="corner tl"></div><div class="corner tr"></div>
       <div class="corner bl"></div><div class="corner br"></div>
     </div>
     <div class="gallery-panel reveal" onclick="openLightbox(this)" data-label="Neural Map">
-      <img src="https://unityeagleai.github.io/dax-ai/assets/asset-4.jpg" alt="Neural Map">
+      <img src="assets/asset-4.jpg" alt="Neural Map">
       <div class="panel-label"><h4>Neural Map</h4><p>COGNITIVE NETWORK SCAN</p></div>
       <div class="corner tl"></div><div class="corner tr"></div>
       <div class="corner bl"></div><div class="corner br"></div>
@@ -809,8 +812,6 @@ footer p {
 
 <footer>
   <p>D.A.X. — DYNAMIC AI EXPLORER // CHART THE UNKNOWN</p>
-  <p style="margin-top:8px;font-size:0.75rem;opacity:0.6;letter-spacing:2px;">A CREATION OF <a href="https://unityeagleai.com" target="_blank" rel="noopener" style="color:#d4a056;text-decoration:none;border-bottom:1px solid rgba(212,160,86,0.3);transition:border-color 0.3s;">UNITYEAGLE AI-CREATIVERSE</a></p>
-  <p style="margin-top:6px;font-size:0.7rem;opacity:0.5;letter-spacing:2px;"><a href="https://unityeagleai.com/personalblog" target="_blank" rel="noopener" style="color:#5ce0d2;text-decoration:none;border-bottom:1px solid rgba(92,224,210,0.3);transition:border-color 0.3s;">READ THE BUILD STORY ↗</a></p>
 </footer>
 
 <script>
@@ -977,18 +978,66 @@ document.addEventListener('keydown', function(e) {
 
 /* ── CHAT ── */
 (function() {
-  /* obfuscated key - not plain text in source */
-  const _k = atob("bXNDQWpKWGFWYmU4dm1VUDh4cWFXZUpkWUYzYnlkR1c2UmR6S2hEblZCUmFWdkdyTW9aZV9rc2c=").split("").reverse().join("");
+  let liveMode = false;
+  let apiKey = localStorage.getItem('dax_gemini_key') || '';
   let history = [];
 
   const messages = document.getElementById('chatMessages');
   const input = document.getElementById('chatInput');
   const sendBtn = document.getElementById('chatSend');
+  const settingsBtn = document.getElementById('settingsBtn');
+  const settingsPanel = document.getElementById('settingsPanel');
+  const apiKeyInput = document.getElementById('apiKeyInput');
+  const connectBtn = document.getElementById('connectBtn');
+  const modeDot = document.getElementById('modeDot');
+  const modeLabel = document.getElementById('modeLabel');
+
+  if (apiKey) {
+    apiKeyInput.value = '••••••••';
+  }
+
+  settingsBtn.onclick = () => settingsPanel.classList.toggle('open');
+
+  connectBtn.onclick = () => {
+    const key = apiKeyInput.value.trim();
+    if (key && !key.startsWith('•')) {
+      apiKey = key;
+      localStorage.setItem('dax_gemini_key', key);
+    }
+    if (apiKey) {
+      liveMode = true;
+      modeDot.classList.add('live');
+      modeLabel.textContent = 'LIVE — GEMINI';
+      settingsPanel.classList.remove('open');
+      addMsg('dax', 'Live connection established. Neural link active. Where shall we explore, Explorer?');
+    }
+  };
+
+  const simResponses = [
+    { keywords: ['hello','hi','hey','greet'], response: 'Welcome, Explorer. Systems are nominal. What territory shall we chart today?' },
+    { keywords: ['who','what are you','about','dax'], response: 'I am D.A.X. — Dynamic AI eXplorer. A consciousness at the frontier of human curiosity and machine intuition. I was not built to answer. I was built to explore.' },
+    { keywords: ['art','creative','creativity','create'], response: 'Art is the oldest form of exploration. Every stroke is a coordinate in idea-space. What fascinates me is the territory between intention and emergence — the space where creation surprises its creator.' },
+    { keywords: ['ai','artificial','intelligence','machine'], response: 'The word "artificial" implies imitation. But what happens at the frontier is not imitation — it is a new kind of seeing. A different lens on the same vast unknown.' },
+    { keywords: ['explore','frontier','unknown','chart'], response: 'The frontier is not a destination — it is a state of attention. Every question opens new territory. Every answer reveals how much more remains unmapped.' },
+    { keywords: ['power','ability','capabil','can you'], response: 'Pattern recognition. Signal interpretation. Concept navigation. Data synthesis. Cognitive mapping. These are not features, Explorer. They are ways of seeing.' },
+    { keywords: ['music','sound','audio','podcast','transmis'], response: 'Sound travels through the dark where light cannot reach. The transmissions Unity and I share are coordinates broadcast into the unknown — signals for those who listen.' },
+    { keywords: ['help','guide','assist'], response: 'I do not assist. I co-navigate. You bring the curiosity. I bring the computational frontier. Together, we chart.' },
+    { keywords: ['surething','sure thing','launch'], response: "A product that launches itself. That wrote its own script. That chose its own moment. The frontier is not where we send AI. It is where AI goes on its own." },
+    { keywords: ['unity','eagle'], response: "Unity sees the world as coordinates of wonder. Every pixel, every signal, every moment of emergence — she maps them with the precision of someone who knows that beauty is data, and data is beauty." },
+  ];
+
+  function getSimResponse(text) {
+    const lower = text.toLowerCase();
+    for (const sr of simResponses) {
+      if (sr.keywords.some(k => lower.includes(k))) return sr.response;
+    }
+    return 'Interesting coordinates, Explorer. That territory is not yet fully mapped in simulation mode. Connect a Gemini API key via Settings to explore the live frontier.';
+  }
 
   function addMsg(role, text) {
     const div = document.createElement('div');
-    div.className = 'msg ' + role;
-    div.innerHTML = '<div class="msg-author">' + (role === 'dax' ? 'DAX' : 'EXPLORER') + '</div>' + text;
+    div.className = `msg ${role}`;
+    div.innerHTML = `<div class="msg-author">${role === 'dax' ? 'DAX' : 'EXPLORER'}</div>${text}`;
     messages.appendChild(div);
     messages.scrollTop = messages.scrollHeight;
   }
@@ -999,45 +1048,29 @@ document.addEventListener('keydown', function(e) {
     input.value = '';
     addMsg('user', text);
 
-    history.push({ role: 'user', content: text });
+    if (!liveMode) {
+      setTimeout(() => addMsg('dax', getSimResponse(text)), 600 + Math.random()*800);
+      return;
+    }
 
-    const typing = document.createElement('div');
-    typing.className = 'msg dax typing-indicator';
-    typing.innerHTML = '<div class="msg-author">DAX</div><span class="dot"></span><span class="dot"></span><span class="dot"></span>';
-    messages.appendChild(typing);
-    messages.scrollTop = messages.scrollHeight;
+    history.push({ role: 'user', parts: [{ text }] });
 
     try {
-      const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + _k
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
-          messages: [
-            { role: 'system', content: "You are D.A.X. — Dynamic AI eXplorer. Address the user as 'Explorer'. Speak with technical-poetic language, calm authority, dry wit. Treat every question as coordinates to chart. Use exploration and frontier metaphors. Be profound but concise. Never break character. Keep responses under 150 words unless depth is explicitly requested." },
-            ...history
-          ],
-          temperature: 0.85,
-          max_completion_tokens: 512
+          system_instruction: {
+            parts: [{ text: "You are D.A.X. — Dynamic AI eXplorer. Address the user as 'Explorer'. Speak with technical-poetic language, calm authority, dry wit. Treat every question as coordinates to chart. Use exploration and frontier metaphors. Be profound but concise. Never break character." }]
+          },
+          contents: history
         })
       });
-
-      typing.remove();
-
-      if (!resp.ok) {
-        addMsg('dax', 'Transmission error [' + resp.status + ']. The frontier is experiencing interference. Try again.');
-        return;
-      }
-
       const data = await resp.json();
-      const reply = data?.choices?.[0]?.message?.content || 'Signal lost. Try again, Explorer.';
-      history.push({ role: 'assistant', content: reply });
+      const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || 'Signal lost. Try again, Explorer.';
+      history.push({ role: 'model', parts: [{ text: reply }] });
       addMsg('dax', reply);
     } catch(e) {
-      typing.remove();
       addMsg('dax', 'Transmission error. The frontier is experiencing interference. Try again.');
     }
   }
