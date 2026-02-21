@@ -634,8 +634,8 @@ footer p {
     <li><a href="#powers">Powers</a></li>
     <li><a href="#neural-link">Neural Link</a></li>
     <li><a href="#gallery">Gallery</a></li>
-    <li><a href="#transmissions">Transmissions</a>
-<a href="#subscribe">Subscribe</a></li>
+    <li><a href="#transmissions">Transmissions</a></li>
+    <li><a href="#subscribe" style="color:var(--cyan)">Subscribe</a></li>
     <li><a href="https://unityeagleai.com" target="_blank" rel="noopener" style="color:var(--amber)">AI-Creativerse ↗</a></li>
     <li><a href="https://unityeagleai.com/personalblog" target="_blank" rel="noopener" style="color:var(--amber)">Blog ↗</a></li>
   </ul>
@@ -1264,5 +1264,69 @@ document.addEventListener('keydown', function(e) {
 })();
 
 </script>
-</body>
-</html>
+
+<!-- ══ SUBSCRIBE ══ -->
+<section id="subscribe" style="min-height:auto;padding:100px 40px 80px;background:#07070f;position:relative;">
+  <div style="max-width:680px;margin:0 auto;text-align:center;position:relative;z-index:2;">
+    <p style="font-family:'Orbitron',monospace;font-size:10px;letter-spacing:6px;color:rgba(0,212,255,0.5);text-transform:uppercase;margin:0 0 16px;">Signal Frequency</p>
+    <h2 style="font-family:'Orbitron',monospace;font-size:clamp(22px,4vw,36px);font-weight:700;color:#00d4ff;letter-spacing:2px;margin:0 0 20px;text-shadow:0 0 30px rgba(0,212,255,0.4);">Stay on frequency.</h2>
+    <p style="font-family:'Share Tech Mono',monospace;font-size:15px;line-height:1.8;color:rgba(192,212,232,0.8);margin:0 0 44px;">New transmissions drop every Wednesday at 20:00 CET.<br>Subscribers get them first.</p>
+
+    <form id="dax-subscribe-form" style="display:flex;flex-direction:column;align-items:center;gap:16px;max-width:420px;margin:0 auto;"
+      onsubmit="daxSubscribe(event)">
+      <input
+        type="email"
+        id="dax-email"
+        placeholder="your.signal@frequency.net"
+        required
+        style="width:100%;box-sizing:border-box;background:rgba(0,212,255,0.04);border:1px solid rgba(0,212,255,0.25);border-radius:2px;padding:14px 18px;font-family:'Share Tech Mono',monospace;font-size:14px;color:#c0d4e8;outline:none;letter-spacing:1px;transition:border-color 0.3s;"
+        onfocus="this.style.borderColor='rgba(0,212,255,0.6)'"
+        onblur="this.style.borderColor='rgba(0,212,255,0.25)'"
+      />
+      <button type="submit" id="dax-sub-btn"
+        style="width:100%;background:transparent;border:1px solid #00d4ff;border-radius:2px;padding:14px 36px;font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:3px;color:#00d4ff;cursor:pointer;text-transform:uppercase;transition:all 0.3s;">
+        TUNE IN →
+      </button>
+    </form>
+    <p id="dax-sub-msg" style="font-family:'Share Tech Mono',monospace;font-size:13px;color:rgba(0,212,255,0.7);margin:20px 0 0;min-height:20px;"></p>
+  </div>
+  <!-- subtle bg glow -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:300px;background:radial-gradient(ellipse,rgba(0,212,255,0.04) 0%,transparent 70%);pointer-events:none;"></div>
+</section>
+
+<script>
+async function daxSubscribe(e) {
+  e.preventDefault();
+  const email = document.getElementById('dax-email').value.trim();
+  const btn = document.getElementById('dax-sub-btn');
+  const msg = document.getElementById('dax-sub-msg');
+  if (!email) return;
+  btn.textContent = 'TRANSMITTING…';
+  btn.style.opacity = '0.6';
+  btn.disabled = true;
+  try {
+    const res = await fetch('https://app.kit.com/forms/9115011/subscriptions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: 'email_address=' + encodeURIComponent(email)
+    });
+    if (res.ok || res.status === 200 || res.status === 201) {
+      msg.textContent = 'Signal locked. First transmission incoming.';
+      msg.style.color = 'rgba(0,212,255,0.8)';
+      document.getElementById('dax-email').value = '';
+      btn.textContent = 'TUNED IN ✓';
+      btn.style.borderColor = 'rgba(0,212,255,0.4)';
+    } else {
+      throw new Error('status ' + res.status);
+    }
+  } catch(err) {
+    msg.textContent = 'Interference detected. Try again.';
+    msg.style.color = 'rgba(255,100,100,0.8)';
+    btn.textContent = 'TUNE IN →';
+    btn.style.opacity = '1';
+    btn.disabled = false;
+  }
+}
+</script>
+
+</body></html>
