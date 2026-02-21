@@ -1012,83 +1012,8 @@ footer p {
   </div>
 </section>
 
-<!-- SECTION 06: SUBSCRIBE -->
-<section id="subscribe" style="padding:80px 20px;text-align:center;background:rgba(0,0,0,0.6);border-top:1px solid rgba(0,200,200,0.15);">
-  <div style="max-width:560px;margin:0 auto;">
-    <div style="font-family:'Orbitron',monospace;font-size:10px;letter-spacing:0.3em;color:rgba(0,200,200,0.6);text-transform:uppercase;margin-bottom:12px;">TRANSMISSION PROTOCOL</div>
-    <h2 style="font-family:'Orbitron',monospace;font-size:clamp(1.2rem,4vw,1.8rem);color:#00c8c8;text-shadow:0 0 20px rgba(0,200,200,0.4);margin:0 0 16px;letter-spacing:0.08em;">STAY ON FREQUENCY</h2>
-    <p style="font-family:'Rajdhani',sans-serif;font-size:1.05rem;color:rgba(255,255,255,0.6);line-height:1.6;margin:0 0 36px;letter-spacing:0.04em;">New transmissions drop weekly. Subscribe and they find you automatically.</p>
 
-    <form id="dax-subscribe-form" onsubmit="daxSubscribe(event)" style="display:flex;flex-direction:column;align-items:center;gap:12px;max-width:400px;margin:0 auto;">
-      <div style="display:flex;width:100%;gap:10px;flex-wrap:wrap;justify-content:center;">
-        <input
-          type="email"
-          id="dax-email-input"
-          placeholder="your@email.com"
-          required
-          style="flex:1;min-width:200px;padding:12px 18px;background:rgba(0,0,0,0.7);border:1px solid rgba(0,200,200,0.4);border-radius:2px;color:#e0e0e0;font-family:'Share Tech Mono',monospace;font-size:0.9rem;letter-spacing:0.06em;outline:none;transition:border-color 0.3s;"
-          onfocus="this.style.borderColor='rgba(0,200,200,0.9)'"
-          onblur="this.style.borderColor='rgba(0,200,200,0.4)'"
-        />
-        <button type="submit" id="dax-subscribe-btn"
-          style="padding:12px 28px;background:transparent;border:1px solid #00c8c8;color:#00c8c8;font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;cursor:pointer;transition:all 0.3s;white-space:nowrap;border-radius:2px;"
-          onmouseover="this.style.background='rgba(0,200,200,0.1)';this.style.boxShadow='0 0 15px rgba(0,200,200,0.3)'"
-          onmouseout="this.style.background='transparent';this.style.boxShadow='none'">
-          SUBSCRIBE
-        </button>
-      </div>
-      <div id="dax-subscribe-status" style="font-family:'Share Tech Mono',monospace;font-size:0.8rem;letter-spacing:0.1em;min-height:20px;transition:all 0.3s;"></div>
-    </form>
-  </div>
-</section>
 
-<script>
-async function daxSubscribe(e) {
-  e.preventDefault();
-  const btn = document.getElementById('dax-subscribe-btn');
-  const status = document.getElementById('dax-subscribe-status');
-  const email = document.getElementById('dax-email-input').value.trim();
-  if (!email) return;
-
-  btn.disabled = true;
-  btn.textContent = '...';
-  status.style.color = 'rgba(0,200,200,0.7)';
-  status.textContent = 'CONNECTING...';
-
-  try {
-    const res = await fetch('https://app.kit.com/forms/9115011/subscriptions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body: new URLSearchParams({ email_address: email })
-    });
-
-    if (res.ok || res.status === 200 || res.status === 201) {
-      status.style.color = '#00c8c8';
-      status.textContent = '// SIGNAL LOCKED. TRANSMISSIONS INCOMING.';
-      document.getElementById('dax-email-input').value = '';
-      btn.textContent = 'SUBSCRIBED';
-      btn.style.borderColor = '#00c8c8';
-    } else {
-      throw new Error('API error: ' + res.status);
-    }
-  } catch(err) {
-    // Kit CORS workaround: form POST still registers even if CORS blocks response
-    // Check if this was a network error vs actual failure
-    if (err.name === 'TypeError') {
-      // Likely CORS - submission probably succeeded
-      status.style.color = '#00c8c8';
-      status.textContent = '// SIGNAL LOCKED. TRANSMISSIONS INCOMING.';
-      document.getElementById('dax-email-input').value = '';
-      btn.textContent = 'SUBSCRIBED';
-    } else {
-      status.style.color = 'rgba(200,100,100,0.9)';
-      status.textContent = 'SIGNAL LOST. TRY AGAIN.';
-      btn.disabled = false;
-      btn.textContent = 'SUBSCRIBE';
-    }
-  }
-}
-</script>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
